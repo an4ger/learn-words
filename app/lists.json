@@ -1,0 +1,44 @@
+[
+  {
+    "id": 0,
+    "name": "Mammals",
+    "words": [
+      {
+        "en": "Badger",
+        "ru": "барсук"
+      },
+      {
+        "en": "deer",
+        "ru": "олень"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "Birds",
+    "words": [
+      {
+        "en": "dove",
+        "ru": "голубь"
+      },
+      {
+        "en": "heron",
+        "ru": "цапля"
+      },
+      {
+        "en": "Peafowl",
+        "ru": "павлин"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Insects",
+    "words": [
+      {
+        "en": "Moth",
+        "ru": "моль"
+      }
+    ]
+  }
+]
