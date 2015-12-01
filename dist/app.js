@@ -56,21 +56,23 @@
 
 	var _reactRouter = __webpack_require__(159);
 
+	var _data = __webpack_require__(214);
+
 	var _menu = __webpack_require__(210);
 
 	var _menu2 = _interopRequireDefault(_menu);
 
-	var _lists = __webpack_require__(211);
+	var _vocabulary_items = __webpack_require__(215);
 
-	var _lists2 = _interopRequireDefault(_lists);
+	var _vocabulary_items2 = _interopRequireDefault(_vocabulary_items);
 
-	var _list = __webpack_require__(213);
+	var _vocabulary = __webpack_require__(216);
 
-	var _list2 = _interopRequireDefault(_list);
+	var _vocabulary2 = _interopRequireDefault(_vocabulary);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var lists = __webpack_require__(212);
+	(0, _data.setInitialData)();
 
 	_reactDom2.default.render(_react2.default.createElement(
 	    _reactRouter.Router,
@@ -78,10 +80,10 @@
 	    _react2.default.createElement(
 	        _reactRouter.Route,
 	        { path: '/', component: _menu2.default },
-	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _lists2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _list2.default })
+	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _vocabulary_items2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: ':id', component: _vocabulary2.default })
 	    )
-	), document.body);
+	), document.getElementById('app'));
 
 /***/ },
 /* 1 */
@@ -133,6 +135,7 @@
 	});
 
 	React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
+	React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 	module.exports = React;
 
@@ -10483,6 +10486,7 @@
 	    multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    name: null,
+	    nonce: MUST_USE_ATTRIBUTE,
 	    noValidate: HAS_BOOLEAN_VALUE,
 	    open: HAS_BOOLEAN_VALUE,
 	    optimum: null,
@@ -10494,6 +10498,7 @@
 	    readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
 	    rel: null,
 	    required: HAS_BOOLEAN_VALUE,
+	    reversed: HAS_BOOLEAN_VALUE,
 	    role: MUST_USE_ATTRIBUTE,
 	    rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
 	    rowSpan: null,
@@ -18696,7 +18701,7 @@
 
 	'use strict';
 
-	module.exports = '0.14.2';
+	module.exports = '0.14.3';
 
 /***/ },
 /* 147 */
@@ -24493,8 +24498,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var Menu = _react2.default.createClass({
-	    displayName: 'Menu',
+	exports.default = _react2.default.createClass({
+	    displayName: 'menu',
 
 	    render: function render() {
 	        return _react2.default.createElement(
@@ -24518,47 +24523,10 @@
 	    }
 	});
 
-	exports.default = Menu;
-
 /***/ },
-/* 211 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var lists = __webpack_require__(212);
-
-	exports.default = _react2.default.createClass({
-	    displayName: 'lists',
-
-	    render: function render() {
-	        var listsNodes = lists.map(function (list) {
-	            return _react2.default.createElement(
-	                'div',
-	                { key: list.id },
-	                list.name
-	            );
-	        });
-	        return _react2.default.createElement(
-	            'div',
-	            { className: 'lw_lists' },
-	            listsNodes
-	        );
-	    }
-	});
-
-/***/ },
-/* 212 */
+/* 211 */,
+/* 212 */,
+/* 213 */
 /***/ function(module, exports) {
 
 	module.exports = [
@@ -24607,7 +24575,43 @@
 	];
 
 /***/ },
-/* 213 */
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var lists = __webpack_require__(213);
+
+	var setInitialData = exports.setInitialData = function setInitialData() {
+	    if (!localStorage.getItem('data')) {
+	        localStorage.setItem('data', JSON.stringify(lists));
+	    }
+	};
+
+	var getAllData = exports.getAllData = function getAllData() {
+	    return JSON.parse(localStorage.getItem('data'));
+	};
+
+	var getItem = exports.getItem = function getItem(id) {
+	    var data = getAllData();
+	    return data[id];
+	};
+
+	var updateStorage = exports.updateStorage = function updateStorage(data) {
+	    localStorage.setItem('data', data);
+	};
+
+	var addItem = exports.addItem = function addItem(item) {
+	    var data = getAllData();
+	    data.push(item);
+	    updateStorage(data);
+	};
+
+/***/ },
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -24620,21 +24624,87 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _data = __webpack_require__(214);
+
+	var _reactRouter = __webpack_require__(159);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	var List = _react2.default.createClass({
-	    displayName: 'List',
+	exports.default = _react2.default.createClass({
+	    displayName: 'vocabulary_items',
 
+	    getInitialState: function getInitialState() {
+	        return { data: (0, _data.getAllData)() };
+	    },
 	    render: function render() {
+	        var vocabNodes = this.state.data.map(function (vocab, index) {
+	            return _react2.default.createElement(
+	                'div',
+	                { key: index },
+	                _react2.default.createElement(
+	                    _reactRouter.Link,
+	                    { to: '/' + vocab.id, key: vocab.id },
+	                    vocab.name
+	                )
+	            );
+	        });
 	        return _react2.default.createElement(
 	            'div',
-	            null,
-	            this.props.params.id
+	            { className: 'lw_vocab' },
+	            vocabNodes
 	        );
 	    }
 	});
 
-	exports.default = List;
+/***/ },
+/* 216 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _data = __webpack_require__(214);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	exports.default = _react2.default.createClass({
+	    displayName: 'vocabulary',
+
+	    getInitialState: function getInitialState() {
+	        return { item: (0, _data.getItem)(this.props.params.id) };
+	    },
+	    render: function render() {
+	        var words = this.state.item.words.map(function (words, index) {
+	            return _react2.default.createElement(
+	                'div',
+	                { key: index },
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    words.en
+	                ),
+	                '-',
+	                _react2.default.createElement(
+	                    'span',
+	                    null,
+	                    words.ru
+	                )
+	            );
+	        });
+	        return _react2.default.createElement(
+	            'div',
+	            null,
+	            words
+	        );
+	    }
+	});
 
 /***/ }
 /******/ ]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 
-export default Menu = React.createClass({
+export default React.createClass({
     render: function() {
         return (
             <div>
